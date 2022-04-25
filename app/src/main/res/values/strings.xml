@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Assignment3</string>
+    <string name="signup_link"><u>NEW USER? SIGN UP</u></string>
 </resources>
