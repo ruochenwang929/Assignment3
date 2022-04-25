@@ -125,6 +125,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:backgroundTint="#000000"
         android:text="SIGN UP"
         app:cornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="@+id/editTextAddress"

@@ -62,6 +62,8 @@ public class SignUpActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(v -> {
             this.finish();
         });
+
+        this.getSupportActionBar().hide();
     }
 
     private boolean validateSignUpForm() {

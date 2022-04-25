@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.assignment3.MainActivity;
 import com.example.assignment3.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        this.getSupportActionBar().hide();
     }
 
     @Override
@@ -66,7 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            // TODO: Jump to next activity
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -98,9 +101,8 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
 
                         if (user.isEmailVerified()) {
-                            // TODO: Jump to next activity
-                            Snackbar.make(loginLayout,  "Success",
-                                    Snackbar.LENGTH_LONG).show();
+                            Intent intent = new Intent(this, MainActivity.class);
+                            startActivity(intent);
                         }
                         else {
                             Snackbar.make(loginLayout,  "Your account is not verified. " +

@@ -2,19 +2,10 @@ package com.example.assignment3.profile.service;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.example.assignment3.R;
 import com.example.assignment3.utils.Result;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserProfileService {
     private final static String TAG = "userPorfileService";
