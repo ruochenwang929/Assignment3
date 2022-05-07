@@ -27,6 +27,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="true" />
+        <activity
+            android:name=".report.ReportActivity"
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"

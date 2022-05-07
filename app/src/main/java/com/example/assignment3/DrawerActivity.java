@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.example.assignment3.auth.LoginActivity;
+import com.example.assignment3.report.ReportActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -67,12 +68,26 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 //                startActivity(intent);
                 finish();
                 return true;
-            case R.id.nav_account:
+            case R.id.nav_home:
+                Intent homeIntent = new Intent(this, MainActivity.class);
+                startActivity(homeIntent);
+                finish();
+                return true;
+            case R.id.nav_plan:
                 // TODO: jump to another activity
                 finish();
                 return true;
-            case R.id.nav_settings:
+            case R.id.nav_map:
                 // TODO: jump to another activity
+                finish();
+                return true;
+            case R.id.nav_profile:
+                // TODO: jump to another activity
+                finish();
+                return true;
+            case R.id.nav_report:
+                Intent reportIntent = new Intent(this, ReportActivity.class);
+                startActivity(reportIntent);
                 finish();
                 return true;
             default:
