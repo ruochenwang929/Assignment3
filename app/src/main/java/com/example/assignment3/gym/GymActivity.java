@@ -3,17 +3,12 @@ package com.example.assignment3.gym;
 import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.widget.Toast;
 
 import com.example.assignment3.DrawerActivity;
 import com.example.assignment3.R;
@@ -24,28 +19,41 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.CancellationToken;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnTokenCanceledListener;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GymActivity extends DrawerActivity implements OnMapReadyCallback {
 
     private ActivityGymBinding binding;
     private MapView mMapView;
     private GoogleMap mMap;
+    private ArrayList<Marker> markers;
     private FusedLocationProviderClient fusedLocationClient;
 
+
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
-    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        markers = new ArrayList<>();
 
         binding = ActivityGymBinding.inflate(getLayoutInflater());
 
@@ -62,27 +70,11 @@ public class GymActivity extends DrawerActivity implements OnMapReadyCallback {
         mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this);
 
-        getLocationPermission();
-    }
-
-    private void getLocationPermission() {
-        String[] permission = {FINE_LOCATION, COURSE_LOCATION};
-
-        boolean permissionGranted =
-                (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                        &&
-                ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
-        if (!permissionGranted)
-            ActivityCompat.requestPermissions(this, permission, 1);
     }
 
     @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        // Add a marker in Sydney and move the camera
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
 
@@ -101,10 +93,60 @@ public class GymActivity extends DrawerActivity implements OnMapReadyCallback {
         .addOnSuccessListener(this, location -> {
             if (location != null) {
                 LatLng myLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.addMarker(new MarkerOptions().position(myLocation).title("It's Me!"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 13));
+                //mMap.addMarker(new MarkerOptions().position(myLocation).title("It's Me!"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15));
+
+                try {
+                    searchNearbyLocationsByKeyword("gym", myLocation, 1500);
+                } catch (Exception e) {
+                    Toast.makeText(this, "Unexpected error occured. Please try relaunching the application", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    private void searchNearbyLocationsByKeyword(String keyword, LatLng position, int radius) throws PackageManager.NameNotFoundException, IOException, JSONException {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(GoogleMapService.MAP_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        String locString = "" + position.latitude + "," + position.longitude;
+
+        ApplicationInfo app;
+        app = this.getApplicationContext().getPackageManager().getApplicationInfo(
+                this.getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);
+
+        Bundle bundle = app.metaData;
+        String apiKey = bundle.getString("com.google.android.geo.API_KEY");
+
+        GoogleMapService googleMapService = retrofit.create(GoogleMapService.class);
+
+        googleMapService.searchNearbyLocationByKeyword(locString, keyword, radius, apiKey).enqueue(new Callback<PlaceList>() {
+            @Override
+            public void onResponse(Call<PlaceList> call, Response<PlaceList> response) {
+                try {
+                    List<PlaceModel> models = response.body().placeModelList;
+                    for (PlaceModel model : models) {
+                        addMarker(model);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlaceList> call, Throwable t) {
+            }
+        });
+    }
+
+    private void addMarker(PlaceModel model) {
+        PlaceModel.Location location = model.getGeometry().getLocation();
+        LatLng markloc = new LatLng(location.getLat(), location.getLng());
+        Marker marker = mMap.addMarker(new MarkerOptions().position(markloc));
+        marker.setTag(model.getPlaceId());
+        markers.add(marker);
     }
 
     @Override
