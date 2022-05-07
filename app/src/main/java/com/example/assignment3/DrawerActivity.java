@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.assignment3.auth.LoginActivity;
@@ -52,10 +53,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     }
 
     @Override
-    public void setContentView(int layoutResID) {
+    public void setContentView(View view) {
         frameLayout = findViewById(R.id.drawer_frame);
-        LayoutInflater.from(getApplicationContext()).inflate(layoutResID, frameLayout);
-        super.setContentView(drawerLayout);
+        frameLayout.addView(view);
+        //LayoutInflater.from(this).inflate(layoutResID, frameLayout);
+        //super.setContentView(drawerLayout);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
@@ -24,7 +25,8 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        View mainView = getLayoutInflater().inflate(R.layout.activity_main, null);
+        setContentView(mainView);
         this.setTitle("Home");
         gymNearMeButton = findViewById(R.id.findGymButton);
         gymNearMeButton.setOnClickListener(l -> onGymNearMeClicked());
