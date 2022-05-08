@@ -1,9 +1,6 @@
 package com.example.assignment3.gym;
 
-import android.content.Intent;
-
-import org.json.JSONObject;
-
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -18,8 +15,12 @@ public interface GoogleMapService {
                                                    @Query("key") String mapKey);
 
     @GET("place/photo")
-    Call<JSONObject> getImageByPhotoReference(@Query("photo_reference") String ref,
-                                              @Query("height") Integer maxHeight,
-                                              @Query("width") Integer maxWidth,
-                                              @Query("key") String mapKey);
+    Call<ResponseBody> getImageByPhotoReference(@Query("photo_reference") String ref,
+                                                @Query("maxheight") Integer maxHeight,
+                                                @Query("maxwidth") Integer maxWidth,
+                                                @Query("key") String mapKey);
+
+    @GET("place/details/json")
+    Call<PlaceDetail> getPlaceDetail(@Query("place_id") String placeId,
+                                      @Query("key") String mapKey);
 }
