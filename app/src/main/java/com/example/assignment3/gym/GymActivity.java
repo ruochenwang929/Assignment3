@@ -70,7 +70,7 @@ public class GymActivity extends DrawerActivity implements OnMapReadyCallback, G
         binding = ActivityGymBinding.inflate(getLayoutInflater());
         viewModel = new ViewModelProvider(this).get(PlaceViewModel.class);
 
-        setContentView(binding.getRoot().getSourceLayoutResId());
+        setContentView(binding.getRoot());
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -82,6 +82,8 @@ public class GymActivity extends DrawerActivity implements OnMapReadyCallback, G
         mMapView = findViewById(R.id.mapView);
         mMapView.onCreate(mapViewBundle);
         mMapView.getMapAsync(this);
+
+        closePlaceFragment();
 
 //        getSupportFragmentManager().beginTransaction()
 //                .setReorderingAllowed(true)
@@ -95,17 +97,7 @@ public class GymActivity extends DrawerActivity implements OnMapReadyCallback, G
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
 
-        mMap.setOnMapClickListener(latLng -> {
-            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.place_fragment);
-            if (fragment == null)
-                return;
-
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .remove(fragment)
-                    .commit();
-        });
-
+        mMap.setOnMapClickListener(latLng -> closePlaceFragment());
 
         fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, new CancellationToken() {
             @NonNull
@@ -174,6 +166,17 @@ public class GymActivity extends DrawerActivity implements OnMapReadyCallback, G
         Marker marker = mMap.addMarker(new MarkerOptions().position(markloc));
         marker.setTag(model.getPlaceId());
         markers.add(marker);
+    }
+
+    private void closePlaceFragment() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.place_fragment);
+        if (fragment == null)
+            return;
+
+        getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .remove(fragment)
+                .commit();
     }
 
     private String getGoogleMapKey() {
