@@ -239,8 +239,9 @@ public class GymActivity extends DrawerActivity implements OnMapReadyCallback, G
                     for (PlaceDetail.PhotoRef ref : placeDetail.getPhotoRef()) {
                         viewModel.setPhoto(ref.getPhotoRef());
                     }
-
-                    //viewModel.setPhoto(placeDetail.getPhotoRef().get(0).getPhotoRef());
+                }
+                else {
+                    viewModel.setPhoto("");
                 }
 
                 getSupportFragmentManager().beginTransaction()

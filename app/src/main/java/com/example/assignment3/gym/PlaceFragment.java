@@ -71,6 +71,8 @@ public class PlaceFragment extends Fragment {
                 mViewModel.setIfNewMarkClicked(false);
             }
 
+            if (s.equals("")) return;
+
             Gson gson = new GsonBuilder().setLenient().create();
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -84,17 +86,11 @@ public class PlaceFragment extends Fragment {
             googleMapService.getImageByPhotoReference(s, 300, 300, apiKey).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Log.i("1111", "111");
                     if (response.isSuccessful()) {
                         if (response.body() != null) {
                             Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
                             adapter.addItem(bmp);
-
-                        } else {
-                            // TODO
                         }
-                    } else {
-                        // TODO
                     }
                 }
 
@@ -104,43 +100,4 @@ public class PlaceFragment extends Fragment {
             });
         });
     }
-
-//    private void getPhotoByPhotoRef(String photoRef) {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(GoogleMapService.MAP_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        String apiKey = mViewModel.getGoogleApiKey();
-//        GoogleMapService googleMapService = retrofit.create(GoogleMapService.class);
-//
-//        googleMapService.getImageByPhotoReference(photoRef, 300, 300, apiKey).enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                if (response.isSuccessful()) {
-//                    if (response.body() != null) {
-//                        // display the image data in a ImageView or save it
-//                        Bitmap bmp;
-//                        try {
-//                            bmp = BitmapFactory.decodeStream(response.body().byteStream());
-//                            return bmp;
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        //imageView.setImageBitmap(bmp);
-//                    } else {
-//                        // TODO
-//                    }
-//                } else {
-//                    // TODO
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//
-//            }
-//        });
-
-//    }
 }
