@@ -65,9 +65,9 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         switch (item.getItemId()) {
             case R.id.nav_logout:
                 FirebaseAuth.getInstance().signOut();
-//                Intent intent = new Intent(this, LoginActivity.class);
-//                startActivity(intent);
-                finish();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             case R.id.nav_account:
                 // TODO: jump to another activity
