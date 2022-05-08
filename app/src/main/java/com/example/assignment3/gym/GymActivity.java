@@ -95,16 +95,17 @@ public class GymActivity extends DrawerActivity implements OnMapReadyCallback, G
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
 
-        binding.getRoot().setOnClickListener(v -> {
+        mMap.setOnMapClickListener(latLng -> {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.place_fragment);
             if (fragment == null)
                 return;
 
             getSupportFragmentManager().beginTransaction()
-                .setReorderingAllowed(true)
-                .remove(fragment)
-                .commit();
+                    .setReorderingAllowed(true)
+                    .remove(fragment)
+                    .commit();
         });
+
 
         fusedLocationClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, new CancellationToken() {
             @NonNull
