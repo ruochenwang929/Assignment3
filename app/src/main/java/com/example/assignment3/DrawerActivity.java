@@ -1,6 +1,7 @@
 package com.example.assignment3;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.example.assignment3.auth.LoginActivity;
@@ -46,7 +49,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return false;
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -88,11 +91,20 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             case R.id.nav_report:
                 Intent reportIntent = new Intent(this, ReportActivity.class);
                 startActivity(reportIntent);
-                finish();
                 return true;
             default:
                 finish();
                 return true;
         }
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
+
+    public void addContentView(View view) {
+        drawerLayout.addView(view,0);
     }
 }
