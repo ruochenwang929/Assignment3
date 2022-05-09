@@ -20,6 +20,9 @@ import com.example.assignment3.auth.LoginActivity;
 import com.example.assignment3.report.ReportActivity;
 import com.example.assignment3.report.ShareActivity;
 import com.facebook.share.Share;
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -57,9 +60,21 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         switch (item.getItemId()){
             case R.id.shareButton:
-                Intent shareIntent = new Intent(this, ShareActivity.class);
-                startActivity(shareIntent);
-                return true;
+                final ShareDialog shareDialog = new ShareDialog(this);
+                ShareHashtag hashtag = new ShareHashtag
+                        .Builder()
+                        .setHashtag("#FacebookSDKAndroid")
+                        .build();
+
+                ShareLinkContent content = new ShareLinkContent
+                        .Builder()
+                        .setQuote("I am using Fitness Now to workout! This is my fitness report!")
+                        .setShareHashtag(hashtag)
+                        //.setContentUrl(Uri.parse(tripImageString.trim()))
+                        .build();
+
+                shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
+                break;
 
         }
         return super.onOptionsItemSelected(item);

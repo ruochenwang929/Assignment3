@@ -22,19 +22,6 @@ public class ShareActivity extends DrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ShareHashtag hashtag = new ShareHashtag
-                .Builder()
-                .setHashtag("#FacebookSDKAndroid")
-                .build();
 
-        ShareLinkContent content = new ShareLinkContent
-                .Builder()
-                .setQuote("I am using Fitness Now to workout! This is my fitness report!")
-                .setShareHashtag(hashtag)
-                //.setContentUrl(Uri.parse(tripImageString.trim()))
-                .build();
-
-        shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
     }
 }
