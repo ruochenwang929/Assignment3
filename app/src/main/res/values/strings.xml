@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">Assignment3</string>
+    <string name="app_name">Fitness Now</string>
     <string name="signup_link"><u>NEW USER? SIGN UP</u></string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="facebook_app_id">"1648703505494922"</string>
+    <string name="facebook_client_token">"53baae70e3733e1195bb4fe8f2af519f"</string>
+
 </resources>

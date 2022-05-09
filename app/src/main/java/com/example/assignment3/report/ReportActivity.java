@@ -1,16 +1,24 @@
 package com.example.assignment3.report;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 
 import com.example.assignment3.DrawerActivity;
 import com.example.assignment3.R;
 import com.example.assignment3.databinding.ActivityReportBinding;
+import com.facebook.share.model.ShareHashtag;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarData;
@@ -67,6 +75,8 @@ public class ReportActivity extends DrawerActivity {
             }
 
         });
+
+
 
 
         Calendar now = Calendar.getInstance();
@@ -185,6 +195,12 @@ public class ReportActivity extends DrawerActivity {
         binding.pieChart.setDescription(description);
 
         binding.pieChart.invalidate();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.share_menu,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 

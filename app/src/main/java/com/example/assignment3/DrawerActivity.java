@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import android.widget.FrameLayout;
 
 import com.example.assignment3.auth.LoginActivity;
 import com.example.assignment3.report.ReportActivity;
+import com.example.assignment3.report.ShareActivity;
+import com.facebook.share.Share;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -52,6 +55,13 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             return true;
         }
 
+        switch (item.getItemId()){
+            case R.id.shareButton:
+                Intent shareIntent = new Intent(this, ShareActivity.class);
+                startActivity(shareIntent);
+                return true;
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -97,6 +107,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 return true;
         }
     }
+
+
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
