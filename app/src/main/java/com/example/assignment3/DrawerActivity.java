@@ -54,10 +54,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     }
 
     @Override
-    public void setContentView(int layoutResID) {
+    public void setContentView(View view) {
         frameLayout = findViewById(R.id.drawer_frame);
-        LayoutInflater.from(getApplicationContext()).inflate(layoutResID, frameLayout);
-        super.setContentView(drawerLayout);
+        frameLayout.addView(view);
+        //LayoutInflater.from(this).inflate(layoutResID, frameLayout);
+        //super.setContentView(drawerLayout);
     }
 
     @Override
@@ -65,9 +66,9 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         switch (item.getItemId()) {
             case R.id.nav_logout:
                 FirebaseAuth.getInstance().signOut();
-//                Intent intent = new Intent(this, LoginActivity.class);
-//                startActivity(intent);
-                finish();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 return true;
             case R.id.nav_home:
                 Intent homeIntent = new Intent(this, MainActivity.class);

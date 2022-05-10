@@ -3,6 +3,7 @@
     <string name="signup_link"><u>NEW USER? SIGN UP</u></string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="title_activity_gym">GymActivity</string>
     <string name="facebook_app_id">570963457718853</string>
     <string name="facebook_login_protocol_schema">fb570963457718853</string>
     <string name="facebook_client_token">8af9f562c0824254f02c5685739e995b</string>

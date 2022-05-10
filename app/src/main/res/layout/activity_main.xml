@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Theme.AppCompat"
     tools:context=".MainActivity"
     tools:ignore="HardcodedText">
 
@@ -51,7 +52,7 @@
         app:layout_constraintStart_toStartOf="@+id/top"
         app:layout_constraintTop_toBottomOf="@+id/titleIcon" />
 
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="0dp"
