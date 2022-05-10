@@ -219,6 +219,28 @@ public class ReportActivity extends DrawerActivity {
         description.setText("Daily Workout Time");
         description.setTextSize(16f);
         binding.barChart.setDescription(description);
+
+        //Clink on barchart to show information dialog
+        binding.barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                String name = binding.barChart.getXAxis().getValueFormatter().getFormattedValue(e.getX(), binding.barChart.getXAxis());
+                BarEntry x = (BarEntry) e;
+                int minutes = (int) x.getY();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
+                builder.setCancelable(true);
+                builder.setMessage("You have spend "+minutes+" minutes on this day");
+                AlertDialog alert = builder.create();
+                alert.setTitle("Date: " + name);
+                alert.show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+
         binding.barChart.invalidate();
 
     }
@@ -268,6 +290,7 @@ public class ReportActivity extends DrawerActivity {
         binding.pieChart.setDescription(description);
         binding.pieChart.animateY(500);
 
+        //Click on slice in pie chart shows details
         binding.pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
