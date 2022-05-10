@@ -180,9 +180,10 @@ public class ReportActivity extends DrawerActivity {
         //Generate X axis label according to user input
         List<String> xAxisValues = new ArrayList<>();
         SimpleDateFormat barFormat = new SimpleDateFormat("MM-dd");
-        while (start <= end){
-            xAxisValues.add(barFormat.format(start));
-            start+=ONE_DAY;
+        Long date = start;
+        while (date <= end){
+            xAxisValues.add(barFormat.format(date));
+            date+=ONE_DAY;
         }
 
         binding.barChart.getXAxis().setValueFormatter(new
@@ -197,6 +198,7 @@ public class ReportActivity extends DrawerActivity {
         description.setTextSize(16f);
         binding.barChart.setDescription(description);
         binding.barChart.invalidate();
+
     }
 
     public void generatePieChart(){
