@@ -61,6 +61,12 @@ public class ReportActivity extends DrawerActivity {
 
     private ActivityReportBinding binding;
     private String chartType;
+    private Calendar now;
+    private Calendar aWeekAgo;
+    private Long start;
+    private Long end;
+    final private int ONE_DAY = 1000*60*60*24;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +96,9 @@ public class ReportActivity extends DrawerActivity {
 
 
         //calculate default date (a week ago from now)
-        Calendar now = Calendar.getInstance();
-        Calendar aWeekAgo = Calendar.getInstance();
-        aWeekAgo.add(Calendar.DATE,-7);
+        now = Calendar.getInstance();
+        aWeekAgo = Calendar.getInstance();
+        aWeekAgo.add(Calendar.DATE,-6);
 
         //set default selected date range for text view
         SimpleDateFormat format = new SimpleDateFormat("MMM d");
@@ -109,7 +115,7 @@ public class ReportActivity extends DrawerActivity {
         MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.dateRangePicker();
         builder.setTitleText("SELECT A DATE RANGE");
         builder.setTheme(R.style.MaterialCalendarTheme);
-        builder.setSelection(new Pair(now.getTimeInMillis()-1000*60*60*24*7,now.getTimeInMillis()));
+        builder.setSelection(new Pair(aWeekAgo.getTimeInMillis(),now.getTimeInMillis()));
         builder.setCalendarConstraints(constraintBuilder.build());
         final MaterialDatePicker materialDatePicker = builder.build();
 
@@ -121,10 +127,11 @@ public class ReportActivity extends DrawerActivity {
             }
         });
 
-        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-            @Override
-            public void onPositiveButtonClick(Object selection) {
+        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
+            @Override public void onPositiveButtonClick(Pair<Long,Long> selection) {
                 binding.selectedDateTextView.setText(materialDatePicker.getHeaderText());
+                start = selection.first;
+                end = selection.second;
             }
         });
 
@@ -149,6 +156,14 @@ public class ReportActivity extends DrawerActivity {
         binding.barChart.setVisibility(View.VISIBLE);
         binding.pieChart.setVisibility(View.INVISIBLE);
 
+        if (start == null || end == null){
+            start = aWeekAgo.getTimeInMillis();
+            end = now.getTimeInMillis();
+        }
+
+        //Toast.makeText(ReportActivity.this, start+" + "+end, Toast.LENGTH_SHORT).show();
+
+        //Reading testing data into bar entries
         List<BarEntry> barEntries = new ArrayList<>();
         barEntries.add(new BarEntry(0, 6766));
         barEntries.add(new BarEntry(1, 4444));
@@ -157,19 +172,29 @@ public class ReportActivity extends DrawerActivity {
         barEntries.add(new BarEntry(4, 1111));
         barEntries.add(new BarEntry(5, 3656));
         barEntries.add(new BarEntry(6, 3435));
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Steps");
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Workout Time");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        List<String> xAxisValues = new ArrayList<>(Arrays.asList("Sun", "Mon", "Tues",
-                "Wed", "Thurs", "Fri","Sat"));
+
+        //Generate X axis label according to user input
+        List<String> xAxisValues = new ArrayList<>();
+        SimpleDateFormat barFormat = new SimpleDateFormat("MM-dd");
+        while (start <= end){
+            xAxisValues.add(barFormat.format(start));
+            start+=ONE_DAY;
+        }
+
         binding.barChart.getXAxis().setValueFormatter(new
                 com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
         BarData barData = new BarData(barDataSet);
         binding.barChart.setData(barData);
         barData.setBarWidth(1.0f);
         binding.barChart.animateY(500);
+
         Description description = new Description();
-        description.setText("Daily Steps");
+        description.setText("Daily Workout Time");
+        description.setTextSize(16f);
         binding.barChart.setDescription(description);
         binding.barChart.invalidate();
     }
@@ -209,6 +234,7 @@ public class ReportActivity extends DrawerActivity {
         binding.pieChart.invalidate();
     }
 
+    //Only Show share icon in Report screen
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.share_menu,menu);
@@ -216,6 +242,7 @@ public class ReportActivity extends DrawerActivity {
     }
 
 
+    //Share to Facebook
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
@@ -234,8 +261,8 @@ public class ReportActivity extends DrawerActivity {
                         .build();
 
 
+                //Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.share_test);
                 Bitmap image;
-//                Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.share_test);
                 if (chartType == "Bar Chart"){
                     image = binding.barChart.getChartBitmap();
                 } else{
