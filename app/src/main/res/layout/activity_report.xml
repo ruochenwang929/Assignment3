@@ -71,7 +71,7 @@
         android:layout_height="26dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="@android:color/darker_gray"
+        android:backgroundTint="@color/dark_grey"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="CHANGE"
@@ -90,8 +90,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/hori" >
-
-
     </com.github.mikephil.charting.charts.BarChart>
 
     <com.github.mikephil.charting.charts.PieChart
@@ -115,7 +113,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@android:color/darker_gray"
+        android:backgroundTint="@color/dark_grey"
         android:text="Update Chart"
         app:layout_constraintBottom_toTopOf="@+id/barChart"
         app:layout_constraintEnd_toEndOf="parent"

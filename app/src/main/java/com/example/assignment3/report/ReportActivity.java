@@ -1,11 +1,13 @@
 package com.example.assignment3.report;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,14 +35,18 @@ import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
@@ -172,9 +178,23 @@ public class ReportActivity extends DrawerActivity {
         barEntries.add(new BarEntry(4, 1111));
         barEntries.add(new BarEntry(5, 3656));
         barEntries.add(new BarEntry(6, 3435));
+//        barEntries.add(new BarEntry(7, 6766));
+//        barEntries.add(new BarEntry(8, 4444));
+//        barEntries.add(new BarEntry(9, 2222));
+//        barEntries.add(new BarEntry(10, 5555));
+//        barEntries.add(new BarEntry(11, 1111));
+//        barEntries.add(new BarEntry(12, 3656));
+//        barEntries.add(new BarEntry(13, 3435));
+//        barEntries.add(new BarEntry(14, 6766));
+//        barEntries.add(new BarEntry(15, 4444));
+//        barEntries.add(new BarEntry(16, 2222));
+//        barEntries.add(new BarEntry(17, 5555));
+//        barEntries.add(new BarEntry(18, 1111));
+//        barEntries.add(new BarEntry(19, 3656));
+//        barEntries.add(new BarEntry(20, 3435));
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Workout Time");
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
 
         //Generate X axis label according to user input
@@ -186,6 +206,8 @@ public class ReportActivity extends DrawerActivity {
             date+=ONE_DAY;
         }
 
+        binding.barChart.getXAxis().setCenterAxisLabels(false);
+        binding.barChart.getXAxis().setGranularity(1f);
         binding.barChart.getXAxis().setValueFormatter(new
                 com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
         BarData barData = new BarData(barDataSet);
@@ -205,23 +227,35 @@ public class ReportActivity extends DrawerActivity {
         binding.barChart.setVisibility(View.INVISIBLE);
         binding.pieChart.setVisibility(View.VISIBLE);
 
-        List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(12.0f,"未违章"));
-        entries.add(new PieEntry(88.0f,"违章"));
+        List<PieEntry> pieEntries = new ArrayList<>();
+        pieEntries.add(new PieEntry(342,"plan1"));
+        pieEntries.add(new PieEntry(22,"plan2"));
+        pieEntries.add(new PieEntry(121,"plan3"));
+        pieEntries.add(new PieEntry(50,"plan4"));
+        pieEntries.add(new PieEntry(87,"plan5"));
 
         binding.pieChart.setDrawHoleEnabled(true);
 
-        String descriptionStr = "平台上有违章车辆和没违章车辆的占比统计";
+        String descriptionStr = "Percentage of Different Workout Plans Completed";
         Description description = new Description();
         description.setText(descriptionStr);
 
-        binding.pieChart.setExtraLeftOffset(0f);
+        binding.pieChart.setExtraLeftOffset(10f);
         binding.pieChart.setExtraTopOffset(32f);
-        binding.pieChart.setExtraRightOffset(0f);
+        binding.pieChart.setExtraRightOffset(10f);
         binding.pieChart.setExtraBottomOffset(32f);
+        binding.pieChart.setCenterText("Completed Workout Plans");
+        binding.pieChart.setCenterTextSize(24);
 
-        PieDataSet pieDataSet = new PieDataSet(entries,"违章情况");
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        Legend l = binding.pieChart.getLegend();
+//        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+//        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setEnabled(true);
+
+        PieDataSet pieDataSet = new PieDataSet(pieEntries,"Workout Plan");
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS   );
         pieDataSet.setValueLinePart1OffsetPercentage(80f);
         pieDataSet.setSliceSpace(4f);
         pieDataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
@@ -232,6 +266,23 @@ public class ReportActivity extends DrawerActivity {
         binding.pieChart.setData(pieData);
         binding.pieChart.setDescription(description);
         binding.pieChart.animateY(500);
+
+//        binding.pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+//            @Override
+//            public void onValueSelected(Entry e, Highlight h) {
+//                int x = binding.pieChart.getData().getDataSetForEntry(e).getEntryIndex((PieEntry) e);
+//                String name =  pieEntries.get(x).getLabel();
+//                float minutes = pieEntries.get(x).getValue();
+//                AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
+//                builder.setCancelable(true);
+//                View view = LayoutInflater.from(ReportActivity.this).inflate(R.layout.)
+//            }
+//
+//            @Override
+//            public void onNothingSelected() {
+//
+//            }
+//        });
 
         binding.pieChart.invalidate();
     }
