@@ -89,8 +89,7 @@ public class ReportActivity extends DrawerActivity {
         });
 
 
-
-
+        //calculate default date (a week ago from now)
         Calendar now = Calendar.getInstance();
         Calendar aWeekAgo = Calendar.getInstance();
         aWeekAgo.add(Calendar.DATE,-7);
@@ -102,7 +101,7 @@ public class ReportActivity extends DrawerActivity {
         binding.selectedDateTextView.setText(formatted_ago+" - "+formatted_today);
 
 
-        //Datepicker constraint
+        //Datepicker constraint, no future selection
         CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
         constraintBuilder.setValidator(DateValidatorPointBackward.now());
 
@@ -119,7 +118,6 @@ public class ReportActivity extends DrawerActivity {
             @Override
             public void onClick(View v) {
                 materialDatePicker.show(getSupportFragmentManager(),"DATE_RANGE_PICKER");
-
             }
         });
 
@@ -130,9 +128,10 @@ public class ReportActivity extends DrawerActivity {
             }
         });
 
-
+        //default bar chart
         generateBarChart();
 
+        //update chart according to user input
         binding.updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +148,7 @@ public class ReportActivity extends DrawerActivity {
     public void generateBarChart(){
         binding.barChart.setVisibility(View.VISIBLE);
         binding.pieChart.setVisibility(View.INVISIBLE);
+
         List<BarEntry> barEntries = new ArrayList<>();
         barEntries.add(new BarEntry(0, 6766));
         barEntries.add(new BarEntry(1, 4444));
@@ -167,8 +167,7 @@ public class ReportActivity extends DrawerActivity {
         BarData barData = new BarData(barDataSet);
         binding.barChart.setData(barData);
         barData.setBarWidth(1.0f);
-        binding.barChart.setVisibility(View.VISIBLE);
-        binding.barChart.animateY(4000);
+        binding.barChart.animateY(500);
         Description description = new Description();
         description.setText("Daily Steps");
         binding.barChart.setDescription(description);
@@ -205,6 +204,7 @@ public class ReportActivity extends DrawerActivity {
         pieData.setValueFormatter(new PercentFormatter());
         binding.pieChart.setData(pieData);
         binding.pieChart.setDescription(description);
+        binding.pieChart.animateY(500);
 
         binding.pieChart.invalidate();
     }
@@ -214,6 +214,7 @@ public class ReportActivity extends DrawerActivity {
         getMenuInflater().inflate(R.menu.share_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -225,27 +226,27 @@ public class ReportActivity extends DrawerActivity {
         switch (item.getItemId()){
 
             case R.id.shareButton:
-                FacebookSdk.sdkInitialize(this.getApplicationContext());
-
-                CallbackManager callbackManager = CallbackManager.Factory.create();
 
                 final ShareDialog shareDialog = new ShareDialog(this);
                 ShareHashtag hashtag = new ShareHashtag
                         .Builder()
-                        .setHashtag("#FacebookSDKAndroid")
+                        .setHashtag("#FitnessNow")
                         .build();
 
 
-                Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.share_test);
+                Bitmap image;
+//                Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.share_test);
+                if (chartType == "Bar Chart"){
+                    image = binding.barChart.getChartBitmap();
+                } else{
+                    image = binding.pieChart.getChartBitmap();
+                }
+
                 SharePhoto photo = new SharePhoto.Builder()
                         .setBitmap(image)
                         .build();
 
-//                SharePhotoContent content1 = new SharePhotoContent.Builder()
-//                        .setShareHashtag(hashtag)
-//                        .addPhoto(photo)
-//                        .build();
-//                shareDialog.show(content1, ShareDialog.Mode.AUTOMATIC);
+
 
                 if (ShareDialog.canShow(SharePhotoContent.class)){
                     SharePhotoContent content = new SharePhotoContent.Builder()
@@ -254,31 +255,13 @@ public class ReportActivity extends DrawerActivity {
                             .build();
                     shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
                 } else{
-                    Toast.makeText(ReportActivity.this,"Fail!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReportActivity.this,"You don't have Facebook installed on your phone! Please install and try again later. ",Toast.LENGTH_SHORT).show();
                 }
 
-                shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-                    @Override
-                    public void onSuccess(Sharer.Result result) {
-                        Toast.makeText(ReportActivity.this,"Share successful!",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(ReportActivity.this,"Share cancel!",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        Toast.makeText(ReportActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
-
                 break;
-
         }
+
         return super.onOptionsItemSelected(item);
     }
-
 
 }
