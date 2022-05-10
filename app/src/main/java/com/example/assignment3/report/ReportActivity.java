@@ -171,13 +171,13 @@ public class ReportActivity extends DrawerActivity {
 
         //Reading testing data into bar entries
         List<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0, 6766));
-        barEntries.add(new BarEntry(1, 4444));
-        barEntries.add(new BarEntry(2, 2222));
-        barEntries.add(new BarEntry(3, 5555));
-        barEntries.add(new BarEntry(4, 1111));
-        barEntries.add(new BarEntry(5, 3656));
-        barEntries.add(new BarEntry(6, 3435));
+        barEntries.add(new BarEntry(0, 676));
+        barEntries.add(new BarEntry(1, 444));
+        barEntries.add(new BarEntry(2, 222));
+        barEntries.add(new BarEntry(3, 555));
+        barEntries.add(new BarEntry(4, 111));
+        barEntries.add(new BarEntry(5, 365));
+        barEntries.add(new BarEntry(6, 343));
 //        barEntries.add(new BarEntry(7, 6766));
 //        barEntries.add(new BarEntry(8, 4444));
 //        barEntries.add(new BarEntry(9, 2222));
@@ -239,6 +239,7 @@ public class ReportActivity extends DrawerActivity {
         String descriptionStr = "Percentage of Different Workout Plans Completed";
         Description description = new Description();
         description.setText(descriptionStr);
+        description.setTextSize(12f);
 
         binding.pieChart.setExtraLeftOffset(10f);
         binding.pieChart.setExtraTopOffset(32f);
@@ -267,22 +268,25 @@ public class ReportActivity extends DrawerActivity {
         binding.pieChart.setDescription(description);
         binding.pieChart.animateY(500);
 
-//        binding.pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-//            @Override
-//            public void onValueSelected(Entry e, Highlight h) {
-//                int x = binding.pieChart.getData().getDataSetForEntry(e).getEntryIndex((PieEntry) e);
-//                String name =  pieEntries.get(x).getLabel();
-//                float minutes = pieEntries.get(x).getValue();
-//                AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
-//                builder.setCancelable(true);
-//                View view = LayoutInflater.from(ReportActivity.this).inflate(R.layout.)
-//            }
-//
-//            @Override
-//            public void onNothingSelected() {
-//
-//            }
-//        });
+        binding.pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                PieEntry x = (PieEntry) e;
+                String name = x.getLabel();
+                float minutes = x.getValue();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
+                builder.setCancelable(true);
+                builder.setMessage("You have spend "+minutes+" minutes on this plan.");
+                AlertDialog alert = builder.create();
+                alert.setTitle(name);
+                alert.show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
 
         binding.pieChart.invalidate();
     }
