@@ -35,27 +35,24 @@
             android:exported="true" />
 
 
-        <activity
-            android:name=".report.ShareActivity"
-            android:exported="true" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"
-            tools:replace="android:value" />
+            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token"/>
 
-        <provider
+        <provider android:authorities="com.facebook.app.FacebookContentProvider570963457718853"
             android:name="com.facebook.FacebookContentProvider"
-            android:authorities="com.facebook.app.FacebookContentProvider1384115388440773"
             android:exported="true" />
 
     </application>
 
-
+    <queries><provider android:authorities="com.facebook.katana.provider.PlatformProvider" /></queries>
 
 
 </manifest>

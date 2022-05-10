@@ -3,7 +3,8 @@
     <string name="signup_link"><u>NEW USER? SIGN UP</u></string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
-    <string name="facebook_app_id">"1648703505494922"</string>
-    <string name="facebook_client_token">"53baae70e3733e1195bb4fe8f2af519f"</string>
+    <string name="facebook_app_id">570963457718853</string>
+    <string name="facebook_login_protocol_schema">fb570963457718853</string>
+    <string name="facebook_client_token">8af9f562c0824254f02c5685739e995b</string>
 
 </resources>

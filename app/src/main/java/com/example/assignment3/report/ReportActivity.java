@@ -2,22 +2,34 @@ package com.example.assignment3.report;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 
+import com.example.assignment3.BuildConfig;
 import com.example.assignment3.DrawerActivity;
 import com.example.assignment3.R;
 import com.example.assignment3.databinding.ActivityReportBinding;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -201,6 +213,71 @@ public class ReportActivity extends DrawerActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.share_menu,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+
+        switch (item.getItemId()){
+
+            case R.id.shareButton:
+                FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+                CallbackManager callbackManager = CallbackManager.Factory.create();
+
+                final ShareDialog shareDialog = new ShareDialog(this);
+                ShareHashtag hashtag = new ShareHashtag
+                        .Builder()
+                        .setHashtag("#FacebookSDKAndroid")
+                        .build();
+
+
+                Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.share_test);
+                SharePhoto photo = new SharePhoto.Builder()
+                        .setBitmap(image)
+                        .build();
+
+//                SharePhotoContent content1 = new SharePhotoContent.Builder()
+//                        .setShareHashtag(hashtag)
+//                        .addPhoto(photo)
+//                        .build();
+//                shareDialog.show(content1, ShareDialog.Mode.AUTOMATIC);
+
+                if (ShareDialog.canShow(SharePhotoContent.class)){
+                    SharePhotoContent content = new SharePhotoContent.Builder()
+                            .setShareHashtag(hashtag)
+                            .addPhoto(photo)
+                            .build();
+                    shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
+                } else{
+                    Toast.makeText(ReportActivity.this,"Fail!",Toast.LENGTH_SHORT).show();
+                }
+
+                shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                    @Override
+                    public void onSuccess(Sharer.Result result) {
+                        Toast.makeText(ReportActivity.this,"Share successful!",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(ReportActivity.this,"Share cancel!",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Toast.makeText(ReportActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
