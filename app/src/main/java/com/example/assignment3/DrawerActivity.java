@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.assignment3.auth.LoginActivity;
+import com.example.assignment3.gym.GymActivity;
 import com.example.assignment3.report.ReportActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -80,7 +82,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 finish();
                 return true;
             case R.id.nav_map:
-                // TODO: jump to another activity
+                Intent gymIntent = new Intent(this, GymActivity.class);
+                startActivity(gymIntent);
                 finish();
                 return true;
             case R.id.nav_profile:
