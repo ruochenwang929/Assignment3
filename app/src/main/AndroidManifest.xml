@@ -5,7 +5,11 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <queries>
+        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -15,11 +19,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Assignment3">
 
-        <!--这个key最后要换成崔姐的-->
+        <activity
+            android:name=".userProfile.EditProfile"
+            android:exported="true" />
+        <activity
+            android:name=".userProfile.Profile"
+            android:exported="true" />
+
+        <!-- 这个key最后要换成崔姐的 -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="" />
-
 
         <activity
             android:name=".gym.GymActivity"
@@ -47,25 +57,20 @@
             android:name=".report.ReportActivity"
             android:exported="true" />
 
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
-            android:value="@string/facebook_client_token"/>
+            android:value="@string/facebook_client_token" />
 
-        <provider android:authorities="com.facebook.app.FacebookContentProvider570963457718853"
+        <provider
             android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider570963457718853"
             android:exported="true" />
-
     </application>
-
-    <queries><provider android:authorities="com.facebook.katana.provider.PlatformProvider" /></queries>
-
 
 </manifest>
