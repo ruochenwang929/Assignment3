@@ -16,7 +16,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}" />
+            android:value="$pk.eyJ1IjoiaGVsYWxpeWEiLCJhIjoiY2wycmRxYzZtMGhhNjNjcWl4cjR1cHdmeCJ9.qb6IXWgn7ytMNoZQeR2sLA" />
 
         <activity
             android:name=".gym.GymActivity"
