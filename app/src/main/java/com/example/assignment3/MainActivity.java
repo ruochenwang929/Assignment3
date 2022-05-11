@@ -78,7 +78,7 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
                 tempTextView.setText(temp + "℃");
 
                 String str = root.getWeather().get(0).getMain();
-                //str.equals("Snow") || str.equals("Extreme")
+
                 if (str.equals("Rain"))
                 {
                     weatherImage.setImageDrawable(getResources().getDrawable(R.drawable.rain));
