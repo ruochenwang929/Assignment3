@@ -3,12 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/Users/Keke/Desktop/5046/app/src/main/res/layout/activity_drawer.xml" value="0.265625" />
         <entry key="..\:/Users/Keke/Desktop/5046/app/src/main/res/layout/activity_login.xml" value="0.265625" />
         <entry key="..\:/Users/Keke/Desktop/5046/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Users/Keke/Desktop/5046/app/src/main/res/layout/activity_report.xml" value="0.264" />
         <entry key="..\:/Users/Keke/Desktop/5046/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
         <entry key="..\:/Users/Keke/Desktop/5046/app/src/main/res/menu/nav_menu.xml" value="0.265625" />
+=======
+        <entry key="app/src/main/res/layout/activity_gym.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.1828774062816616" />
+>>>>>>> weather
       </map>
     </option>
   </component>
