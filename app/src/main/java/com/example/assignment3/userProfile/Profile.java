@@ -42,10 +42,9 @@ public class Profile extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
 
+                        binding.emailText.setText(email);
                         String name = document.getData().get("Name").toString();
                         binding.nameText.setText(name);
-                        //String email = document.getData().get("Email").toString();
-                        binding.emailText.setText(email);
                         String address = document.getData().get("Address").toString();
                         binding.addressText.setText(address);
 
