@@ -101,8 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = mAuth.getCurrentUser();
 
                         if (user.isEmailVerified()) {
-                            Intent intent = new Intent(this, MainActivity.class);
-                            startActivity(intent);
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }
                         else {
                             Snackbar.make(loginLayout,  "Your account is not verified. " +
