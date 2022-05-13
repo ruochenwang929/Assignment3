@@ -1,14 +1,13 @@
 package com.example.assignment3.userProfile;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.assignment3.MainActivity;
+import com.example.assignment3.DrawerActivity;
 import com.example.assignment3.databinding.ActivityProfileBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -18,7 +17,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class Profile extends AppCompatActivity {
+public class ProfileActivity extends DrawerActivity {
 
     private ActivityProfileBinding binding;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -29,6 +28,7 @@ public class Profile extends AppCompatActivity {
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        this.setTitle("Profile");
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user.getEmail();
@@ -49,25 +49,18 @@ public class Profile extends AppCompatActivity {
                         binding.addressText.setText(address);
 
                     } else {
-                        Toast.makeText(Profile.this, "No such document", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "No such document", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(Profile.this, "get failed with " + task.getException(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "get failed with " + task.getException(), Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        binding.backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Profile.this, MainActivity.class));
             }
         });
 
         binding.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Profile.this, EditProfile.class));
+                startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
             }
         });
     }

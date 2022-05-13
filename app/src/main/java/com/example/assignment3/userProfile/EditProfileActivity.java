@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EditProfile extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
     private EditProfileBinding binding;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -30,6 +30,7 @@ public class EditProfile extends AppCompatActivity {
         binding = EditProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        this.setTitle("Edit Profile");
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user.getEmail();
@@ -55,15 +56,15 @@ public class EditProfile extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 System.out.println("success+++++++");
-                                Toast.makeText(EditProfile.this, "Save successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(EditProfile.this, Profile.class));
+                                Toast.makeText(EditProfileActivity.this, "Save successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 System.out.println("Error--------");
-                                Toast.makeText(EditProfile.this, "Error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditProfileActivity.this, "Error", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
@@ -72,7 +73,7 @@ public class EditProfile extends AppCompatActivity {
         binding.cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(EditProfile.this, Profile.class));
+                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
             }
         });
     }

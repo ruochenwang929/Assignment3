@@ -8,7 +8,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -16,7 +15,7 @@ import android.widget.FrameLayout;
 import com.example.assignment3.auth.LoginActivity;
 import com.example.assignment3.gym.GymActivity;
 import com.example.assignment3.report.ReportActivity;
-import com.example.assignment3.userProfile.Profile;
+import com.example.assignment3.userProfile.ProfileActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -88,7 +87,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 finish();
                 return true;
             case R.id.nav_profile:
-                startActivity(new Intent(this, Profile.class));
+                startActivity(new Intent(this, ProfileActivity.class));
                 finish();
                 return true;
             case R.id.nav_report:

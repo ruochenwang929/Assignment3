@@ -20,10 +20,10 @@
         android:theme="@style/Theme.Assignment3">
 
         <activity
-            android:name=".userProfile.EditProfile"
+            android:name=".userProfile.EditProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".userProfile.Profile"
+            android:name=".userProfile.ProfileActivity"
             android:exported="true" />
 
         <!-- 这个key最后要换成崔姐的 -->
