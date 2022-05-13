@@ -28,6 +28,18 @@ public class Profile extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        binding.backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this, MainActivity.class));
+            }
+        });
 
+        binding.editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Profile.this, EditProfile.class));
+            }
+        });
     }
 }

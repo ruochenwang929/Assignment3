@@ -29,5 +29,11 @@ public class EditProfile extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        binding.cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EditProfile.this, Profile.class));
+            }
+        });
     }
 }

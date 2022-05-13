@@ -1,26 +1,35 @@
 package com.example.assignment3.auth;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.assignment3.R;
 import com.example.assignment3.profile.service.UserProfile;
 import com.example.assignment3.profile.service.UserProfileService;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.util.Patterns;
-import android.widget.Button;
-import android.widget.EditText;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "SignUp";
 
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
     private UserProfileService userProfileService;
 
@@ -56,7 +65,33 @@ public class SignUpActivity extends AppCompatActivity {
                 String email = emailText.getText().toString();
                 String password = passwordText.getText().toString();
                 createAccount(email, password);
+
+                String address = addressText.getText().toString();
+                String name = firstNameText.getText().toString() + " " + lastNameText.getText().toString();
+
+                Map<String, Object> profile = new HashMap<>();
+                profile.put("Address", address);
+                profile.put("Email", email);
+                profile.put("Name", name);
+
+                db.collection("User").document(email)
+                        .set(profile)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(SignUpActivity.this, "The user data is successfully added", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(SignUpActivity.this, "Error with Firestore" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                System.out.println("----------" + e.getMessage());
+                            }
+                        });
+
             }
+
         });
 
         cancelButton.setOnClickListener(v -> {
@@ -77,7 +112,6 @@ public class SignUpActivity extends AppCompatActivity {
             lastName.equals("") || address.equals("")) {
             Snackbar.make(signUpLayout, "Please fill all fields", Snackbar.LENGTH_LONG)
                     .show();
-
             return false;
         }
 

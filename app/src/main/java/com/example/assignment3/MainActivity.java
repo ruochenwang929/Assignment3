@@ -7,13 +7,11 @@ import android.content.pm.PackageManager;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -21,13 +19,8 @@ import androidx.core.content.ContextCompat;
 import com.example.assignment3.gym.GymActivity;
 import com.example.assignment3.weather.Root;
 import com.example.assignment3.weather.WeatherApiInterface;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -121,23 +114,21 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
         });
 
 //        Map<String, Object> city = new HashMap<>();
-//        city.put("Address", "clayton");
-//        city.put("Email", "test@test.com");
-//        city.put("Name", "Edison Chennnn");
+//        city.put("Address", "LA");
+//        city.put("Email", "aaa@bbb.com");
+//        city.put("Name", "Jacky Chen");
 //
-//        db.collection("User").document("Profile")
+//        db.collection("Test").document("Profile2")
 //                .set(city)
 //                .addOnSuccessListener(new OnSuccessListener<Void>() {
 //                    @Override
 //                    public void onSuccess(Void aVoid) {
-//                        //Log.d(TAG, "DocumentSnapshot successfully written!");
 //                        Toast.makeText(MainActivity.this, "The user data is successfully added", Toast.LENGTH_SHORT).show();
 //                    }
 //                })
 //                .addOnFailureListener(new OnFailureListener() {
 //                    @Override
 //                    public void onFailure(@NonNull Exception e) {
-//                        //Log.w(TAG, "Error writing document", e);
 //                        Toast.makeText(MainActivity.this, "Error with Firestore", Toast.LENGTH_SHORT).show();
 //                    }
 //                });
