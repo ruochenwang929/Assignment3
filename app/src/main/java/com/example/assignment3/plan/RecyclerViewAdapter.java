@@ -34,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final WorkoutPlan plan = plans.get(position);
         holder.binding.tvRvName.setText(plan.getPlanName());
         holder.binding.tvRvCategory.setText(plan.getCategory());
-        holder.binding.tvRvTime.setText(plan.getTime());
+        holder.binding.tvRvTime.setText(plan.getTime()+"min");
     }
 
     @Override
@@ -63,6 +63,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     intent.putExtra("time",plan.getTime());
                     intent.putExtra("category",plan.getCategory());
                     intent.putExtra("routine",plan.getPlanRoutine());
+
+                    //intent.putExtra("pid",plan.getPlanID());
 
                     v.getContext().startActivity(intent);
 

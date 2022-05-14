@@ -24,19 +24,22 @@ public class PlanDetailsActivity extends DrawerActivity {
 
         Bundle bundle = getIntent().getExtras();
 
+        int planID = (int)bundle.get("pid");
+
         binding.name.setText((String) bundle.get("name"));
         binding.length.setText((String) bundle.get("length") + " days");
         binding.time.setText((String) bundle.get("time") + " minutes");
         binding.category.setText((String) bundle.get("category"));
         binding.routine.setText((String) bundle.get("routine"));
 
-
-
         binding.completeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PlanDetailsActivity.this,
                         PlanActivity.class);
+                //plan length-1
+
+
                 startActivity(intent);
             } });
 
