@@ -8,6 +8,7 @@ import android.view.View;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -42,27 +43,27 @@ public class PlanActivity extends DrawerActivity {
         setContentView(view);
         this.setTitle("Workout Plan");
 
-        plans = new ArrayList<WorkoutPlan>();
+        plans = new ArrayList<>();
+        plans.add(new WorkoutPlan("plan1","30","30","Indoor","routines"));
+        plans.add(new WorkoutPlan("plan2","20","20","Outdoor","routines"));
+
+        adapter = new RecyclerViewAdapter(plans);
+        adapter.addPlan(plans);
 
         planViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(PlanViewModel.class);
         planViewModel.getAllWorkoutPlan().observe(this, new
                 Observer<List<WorkoutPlan>>() {
                     @Override
-                    public void onChanged(List<WorkoutPlan> workoutPlans) {
-                        plans = workoutPlans;
+                    public void onChanged(@Nullable List<WorkoutPlan> workoutPlans) {
+                        adapter.addPlan(workoutPlans);
                     }
                 });
 
-        plans.add(new WorkoutPlan("plan1","30","30","Indoor","routines"));
-        plans.add(new WorkoutPlan("plan2","20","20","Outdoor","routines"));
 
-        adapter = new RecyclerViewAdapter(plans);
         binding.recyclerView.setAdapter(adapter);
 
         layoutManager = new LinearLayoutManager(this);
         binding.recyclerView.setLayoutManager(layoutManager);
-
-
 
     }
 
