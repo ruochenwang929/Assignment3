@@ -178,20 +178,7 @@ public class ReportActivity extends DrawerActivity {
         barEntries.add(new BarEntry(4, 111));
         barEntries.add(new BarEntry(5, 365));
         barEntries.add(new BarEntry(6, 343));
-//        barEntries.add(new BarEntry(7, 6766));
-//        barEntries.add(new BarEntry(8, 4444));
-//        barEntries.add(new BarEntry(9, 2222));
-//        barEntries.add(new BarEntry(10, 5555));
-//        barEntries.add(new BarEntry(11, 1111));
-//        barEntries.add(new BarEntry(12, 3656));
-//        barEntries.add(new BarEntry(13, 3435));
-//        barEntries.add(new BarEntry(14, 6766));
-//        barEntries.add(new BarEntry(15, 4444));
-//        barEntries.add(new BarEntry(16, 2222));
-//        barEntries.add(new BarEntry(17, 5555));
-//        barEntries.add(new BarEntry(18, 1111));
-//        barEntries.add(new BarEntry(19, 3656));
-//        barEntries.add(new BarEntry(20, 3435));
+
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Workout Time");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -296,7 +283,7 @@ public class ReportActivity extends DrawerActivity {
             public void onValueSelected(Entry e, Highlight h) {
                 PieEntry x = (PieEntry) e;
                 String name = x.getLabel();
-                float minutes = x.getValue();
+                int minutes = (int) x.getValue();
                 AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
                 builder.setCancelable(true);
                 builder.setMessage("You have spend "+minutes+" minutes on this plan.");
