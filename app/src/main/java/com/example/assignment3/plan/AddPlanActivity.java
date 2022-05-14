@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -14,6 +15,7 @@ import com.example.assignment3.DrawerActivity;
 import com.example.assignment3.R;
 import com.example.assignment3.databinding.ActivityEditPlanBinding;
 import com.example.assignment3.entity.WorkoutPlan;
+import com.example.assignment3.report.ReportActivity;
 
 import java.util.List;
 
@@ -61,6 +63,9 @@ public class AddPlanActivity extends DrawerActivity {
                     WorkoutPlan workoutplan = new WorkoutPlan(name,length,time,category,planRoutine);
                     PlanViewModel.insert(workoutplan);
                     //binding.textViewRead.setText("plan"+name + time + planRoutine);
+                    Toast.makeText(AddPlanActivity.this,"The plan has been added successfully! ",Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(AddPlanActivity.this,"Failed: Please enter all field! ",Toast.LENGTH_SHORT).show();
                 }
             }});
 
