@@ -7,5 +7,8 @@
     <string name="facebook_app_id">570963457718853</string>
     <string name="facebook_login_protocol_schema">fb570963457718853</string>
     <string name="facebook_client_token">8af9f562c0824254f02c5685739e995b</string>
+    <string name="profile_name">Name: </string>
+    <string name="profile_email">Email: </string>
+    <string name="profile_address">Address: </string>
 
 </resources>
