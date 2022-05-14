@@ -16,9 +16,9 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
         app:cardCornerRadius="10dp">
 
         <TextView

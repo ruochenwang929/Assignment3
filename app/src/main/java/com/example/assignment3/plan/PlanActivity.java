@@ -57,8 +57,6 @@ public class PlanActivity extends DrawerActivity {
         plans.add(new WorkoutPlan("plan2","20","20","Outdoor","routines"));
 
         adapter = new RecyclerViewAdapter(plans);
-        binding.recyclerView.addItemDecoration(new
-                DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         binding.recyclerView.setAdapter(adapter);
 
         layoutManager = new LinearLayoutManager(this);
