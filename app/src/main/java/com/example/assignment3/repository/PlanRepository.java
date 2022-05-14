@@ -26,6 +26,7 @@ public class PlanRepository {
     public LiveData<List<WorkoutPlan>> getAllWorkoutPlan() {
         return allWorkoutPlan;
     }
+
     public void insert(final WorkoutPlan workoutPlan){
         PlanDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
@@ -34,6 +35,7 @@ public class PlanRepository {
             }
         });
     }
+
     public void deleteAll(){
         PlanDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
@@ -42,6 +44,7 @@ public class PlanRepository {
             }
         });
     }
+
     public void delete(final WorkoutPlan workoutPlan){
         PlanDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
@@ -58,6 +61,7 @@ public class PlanRepository {
             }
         });
     }
+
     //@RequiresApi(api = Build.VERSION_CODES.N)
     public CompletableFuture<WorkoutPlan> findByIDFuture(final int workoutplanId) {
         return CompletableFuture.supplyAsync(new Supplier<WorkoutPlan>() {

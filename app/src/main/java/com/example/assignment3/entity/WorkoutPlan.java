@@ -35,5 +35,49 @@ public class WorkoutPlan {
         this.category = category;
         this.planRoutine = planRoutine;
     }
+
+    @NonNull
+    public String getPlanName() {
+        return planName;
+    }
+
+    public void setPlanName(@NonNull String planName) {
+        this.planName = planName;
+    }
+
+    @NonNull
+    public String getPlanLength() {
+        return planLength;
+    }
+
+    public void setPlanLength(@NonNull String planLength) {
+        this.planLength = planLength;
+    }
+
+    @NonNull
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(@NonNull String time) {
+        this.time = time;
+    }
+
+    @NonNull
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(@NonNull String category) {
+        this.category = category;
+    }
+
+    public String getPlanRoutine() {
+        return planRoutine;
+    }
+
+    public void setPlanRoutine(String planRoutine) {
+        this.planRoutine = planRoutine;
+    }
 }
 
