@@ -18,15 +18,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Assignment3">
-
         <activity
             android:name=".userProfile.EditProfileActivity"
             android:exported="true" />
         <activity
             android:name=".userProfile.ProfileActivity"
-            android:exported="true" />
-
-        <!-- 这个key最后要换成崔姐的 -->
+            android:exported="true" /> <!-- 这个key最后要换成崔姐的 -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="" />
@@ -55,6 +52,18 @@
             android:exported="true" />
         <activity
             android:name=".report.ReportActivity"
+            android:exported="true" />
+        <activity
+            android:name=".plan.PlanActivity"
+            android:exported="true" />
+        <activity
+            android:name=".plan.PlanDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".plan.AddPlanActivity"
+            android:exported="true" />
+        <activity
+            android:name=".plan.DatePickerActivity"
             android:exported="true" />
 
         <meta-data

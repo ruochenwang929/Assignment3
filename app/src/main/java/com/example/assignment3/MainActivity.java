@@ -16,7 +16,10 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.assignment3.databinding.ActivityMainBinding;
 import com.example.assignment3.gym.GymActivity;
+import com.example.assignment3.plan.PlanActivity;
+import com.example.assignment3.plan.PlanDetailsActivity;
 import com.example.assignment3.weather.Root;
 import com.example.assignment3.weather.WeatherApiInterface;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,10 +38,17 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
     private ImageView weatherImage;
     private TextView mainTextView;
 
+    private CardView allPlan;
+    private CardView indoorPlan;
+    private CardView outdoorPlan;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+
+    //private ActivityMainBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,37 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
         this.setTitle("Home");
         gymNearMeButton = findViewById(R.id.findGymButton);
         gymNearMeButton.setOnClickListener(l -> onGymNearMeClicked());
+
+
+        allPlan = findViewById(R.id.allPlanButton);
+        allPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,
+                        PlanActivity.class);
+                startActivity(intent);
+            } });
+
+
+        indoorPlan = findViewById(R.id.indoorButton);
+        indoorPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,
+                        PlanActivity.class);
+                startActivity(intent);
+            } });
+
+        outdoorPlan = findViewById(R.id.outdoorButton);
+        outdoorPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,
+                        PlanActivity.class);
+                startActivity(intent);
+            } });
+
+
 
         tempTextView = findViewById(R.id.tempTextView);
         weatherImage = findViewById(R.id.weatherImage);
