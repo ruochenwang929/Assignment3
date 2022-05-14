@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.assignment3.DrawerActivity;
 import com.example.assignment3.R;
-import com.example.assignment3.databinding.ActivityEditPlanBinding;
+import com.example.assignment3.databinding.ActivityAddPlanBinding;
 import com.example.assignment3.entity.WorkoutPlan;
 import com.example.assignment3.report.ReportActivity;
 
@@ -21,7 +21,7 @@ import java.util.List;
 
 
 public class AddPlanActivity extends DrawerActivity {
-    private ActivityEditPlanBinding binding;
+    private ActivityAddPlanBinding binding;
     private String[] categoryArray = {"Indoor exercise","Outdoor exercise"};
     private com.example.assignment3.viewmodel.PlanViewModel PlanViewModel;
 
@@ -29,7 +29,7 @@ public class AddPlanActivity extends DrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setTitle("Add New Plan");
-        binding = ActivityEditPlanBinding.inflate(getLayoutInflater());
+        binding = ActivityAddPlanBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         initSpinner();

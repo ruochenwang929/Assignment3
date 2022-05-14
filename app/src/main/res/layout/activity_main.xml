@@ -195,7 +195,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/topright" />
 
             <TextView
@@ -207,7 +207,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/koho_bold"
-                android:text="Your report"
+                android:text="Your Report"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </RelativeLayout>
