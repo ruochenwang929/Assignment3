@@ -97,7 +97,6 @@ public class ReportActivity extends DrawerActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-
         });
 
 
