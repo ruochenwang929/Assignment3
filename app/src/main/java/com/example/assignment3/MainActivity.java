@@ -20,6 +20,7 @@ import com.example.assignment3.databinding.ActivityMainBinding;
 import com.example.assignment3.gym.GymActivity;
 import com.example.assignment3.plan.PlanActivity;
 import com.example.assignment3.plan.PlanDetailsActivity;
+import com.example.assignment3.report.ReportActivity;
 import com.example.assignment3.weather.Root;
 import com.example.assignment3.weather.WeatherApiInterface;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,8 +40,8 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
     private TextView mainTextView;
 
     private CardView allPlan;
-    private CardView indoorPlan;
-    private CardView outdoorPlan;
+    private CardView report;
+
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -69,25 +70,14 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
                 startActivity(intent);
             } });
 
-
-        indoorPlan = findViewById(R.id.indoorButton);
-        indoorPlan.setOnClickListener(new View.OnClickListener() {
+        report = findViewById(R.id.reportButton);
+        report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,
-                        PlanActivity.class);
+                        ReportActivity.class);
                 startActivity(intent);
             } });
-
-        outdoorPlan = findViewById(R.id.outdoorButton);
-        outdoorPlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,
-                        PlanActivity.class);
-                startActivity(intent);
-            } });
-
 
 
         tempTextView = findViewById(R.id.tempTextView);

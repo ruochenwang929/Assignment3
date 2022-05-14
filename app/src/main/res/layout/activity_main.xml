@@ -177,7 +177,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/indoorButton"
+        android:id="@+id/reportButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -199,53 +199,21 @@
                 android:src="@drawable/topright" />
 
             <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_width="134dp"
+                android:layout_height="58dp"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="20dp"
+                android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/koho_bold"
-                android:text="Indoor Exercise"
+                android:text="Your report"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/outdoorButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="@+id/allPlanButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/indoorButton">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/bottomright" />
-
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/koho_bold"
-                android:text="Outdoor Exercise"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/findGymButton"
@@ -338,8 +306,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.70
-"
+        app:layout_constraintGuide_percent="0.85"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
