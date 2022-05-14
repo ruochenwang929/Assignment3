@@ -38,8 +38,6 @@ public class PlanDetailsActivity extends DrawerActivity {
                 Intent intent = new Intent(PlanDetailsActivity.this,
                         PlanActivity.class);
                 //plan length-1
-
-
                 startActivity(intent);
             } });
 
