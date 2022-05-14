@@ -1,34 +1,24 @@
 package com.example.assignment3.plan;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.assignment3.DrawerActivity;
-import com.example.assignment3.MainActivity;
 import com.example.assignment3.R;
 import com.example.assignment3.databinding.ActivityEditPlanBinding;
 import com.example.assignment3.entity.WorkoutPlan;
-import com.example.assignment3.viewmodel.PlanViewModel;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 
-public class EditPlanActivity extends DrawerActivity {
+public class AddPlanActivity extends DrawerActivity {
     private ActivityEditPlanBinding binding;
     private String[] categoryArray = {"Indoor exercise","Outdoor exercise"};
 
@@ -41,6 +31,7 @@ public class EditPlanActivity extends DrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTitle("Add New Plan");
         binding = ActivityEditPlanBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -72,7 +63,7 @@ public class EditPlanActivity extends DrawerActivity {
         binding.textView15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EditPlanActivity.this,
+                Intent intent = new Intent(AddPlanActivity.this,
                         DatePickerActivity.class);
                 //secondActivityLauncher.launch(intent);
                 startActivity(intent);
@@ -83,7 +74,7 @@ public class EditPlanActivity extends DrawerActivity {
         binding.textView16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EditPlanActivity.this,
+                Intent intent = new Intent(AddPlanActivity.this,
                         DatePickerActivity.class);
                 //secondActivityLauncher.launch(intent);
                 startActivity(intent);

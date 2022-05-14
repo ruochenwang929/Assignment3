@@ -1,5 +1,6 @@
 package com.example.assignment3.plan;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.assignment3.databinding.RvLayoutBinding;
 import com.example.assignment3.entity.WorkoutPlan;
+import com.example.assignment3.report.ReportActivity;
 
 import java.util.List;
 
@@ -50,6 +52,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ViewHolder(RvLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            binding.cardView.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(),PlanDetailsActivity.class);
+                    WorkoutPlan plan = plans.get(getAdapterPosition());
+                    intent.putExtra("name",plan.getPlanName());
+                    intent.putExtra("length",plan.getPlanLength());
+                    intent.putExtra("time",plan.getTime());
+                    intent.putExtra("category",plan.getCategory());
+                    intent.putExtra("routine",plan.getPlanRoutine());
+
+                    v.getContext().startActivity(intent);
+
+                }
+            });
         }
     }
 }

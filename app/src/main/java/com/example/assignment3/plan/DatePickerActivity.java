@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.assignment3.databinding.ActivityDatePickerBinding;
-import com.example.assignment3.databinding.ActivityEditPlanBinding;
 
 public class DatePickerActivity extends AppCompatActivity implements DatePicker.OnDateChangedListener{
     private ActivityDatePickerBinding binding;
@@ -33,7 +32,7 @@ public class DatePickerActivity extends AppCompatActivity implements DatePicker.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DatePickerActivity.this,
-                        EditPlanActivity.class);
+                        AddPlanActivity.class);
                 startActivity(intent);
             }
         });
@@ -44,7 +43,7 @@ public class DatePickerActivity extends AppCompatActivity implements DatePicker.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DatePickerActivity.this,
-                        EditPlanActivity.class);
+                        AddPlanActivity.class);
                 bundle.putInt("YEAR",cal_year);
                 bundle.putInt("MONTH",cal_month);
                 bundle.putInt("DAY",cal_day);
