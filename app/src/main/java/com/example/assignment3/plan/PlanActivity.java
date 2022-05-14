@@ -62,6 +62,8 @@ public class PlanActivity extends DrawerActivity {
         layoutManager = new LinearLayoutManager(this);
         binding.recyclerView.setLayoutManager(layoutManager);
 
+
+
     }
 
     //Only Show add icon in Plan screen
@@ -73,6 +75,8 @@ public class PlanActivity extends DrawerActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(this,AddPlanActivity.class);
+        startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 }

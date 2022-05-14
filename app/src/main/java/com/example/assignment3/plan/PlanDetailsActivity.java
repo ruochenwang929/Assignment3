@@ -20,9 +20,19 @@ public class PlanDetailsActivity extends DrawerActivity {
         binding = ActivityPlanDetailsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        this.setTitle("Plan Details");
+
+        Bundle bundle = getIntent().getExtras();
+
+        binding.name.setText((String) bundle.get("name"));
+        binding.length.setText((String) bundle.get("length") + " days");
+        binding.time.setText((String) bundle.get("time") + " minutes");
+        binding.category.setText((String) bundle.get("category"));
+        binding.routine.setText((String) bundle.get("routine"));
 
 
-        binding.button5.setOnClickListener(new View.OnClickListener() {
+
+        binding.completeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PlanDetailsActivity.this,
