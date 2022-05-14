@@ -33,8 +33,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
         final WorkoutPlan plan = plans.get(position);
         holder.binding.tvRvName.setText(plan.getPlanName());
-        holder.binding.tvRvCategory.setText(plan.getCategory());
-        holder.binding.tvRvTime.setText(plan.getTime());
+        holder.binding.tvRvCategory.setText(plan.getCategory()+" exercise");
+        holder.binding.tvRvTime.setText(plan.getTime()+(" mins"));
     }
 
     @Override
