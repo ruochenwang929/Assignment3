@@ -24,8 +24,6 @@ public class PlanDetailsActivity extends DrawerActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        int planID = (int)bundle.get("pid");
-
         binding.name.setText((String) bundle.get("name"));
         binding.length.setText((String) bundle.get("length") + " days");
         binding.time.setText((String) bundle.get("time") + " minutes");
