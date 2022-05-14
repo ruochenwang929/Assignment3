@@ -76,8 +76,10 @@ public class PlanActivity extends DrawerActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent = new Intent(this,AddPlanActivity.class);
-        startActivity(intent);
+        if (item.getItemId() == R.id.addButton){
+            Intent intent = new Intent(this,AddPlanActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 }
