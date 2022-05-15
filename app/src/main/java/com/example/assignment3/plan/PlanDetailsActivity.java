@@ -30,13 +30,12 @@ public class PlanDetailsActivity extends DrawerActivity {
         binding.category.setText((String) bundle.get("category"));
         binding.routine.setText((String) bundle.get("routine"));
 
-
-
         binding.completeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PlanDetailsActivity.this,
                         PlanActivity.class);
+                //plan length-1
                 startActivity(intent);
             } });
 

@@ -36,6 +36,10 @@ public class WorkoutPlan {
         this.planRoutine = planRoutine;
     }
 
+    public int getPlanID() {
+        return pid;
+    }
+
     @NonNull
     public String getPlanName() {
         return planName;

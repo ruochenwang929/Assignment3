@@ -8,22 +8,39 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.OutOfQuotaPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
-import com.example.assignment3.databinding.ActivityMainBinding;
+import com.example.assignment3.entity.WorkoutPlan;
 import com.example.assignment3.gym.GymActivity;
 import com.example.assignment3.plan.PlanActivity;
-import com.example.assignment3.plan.PlanDetailsActivity;
+import com.example.assignment3.plan.PlanService;
+import com.example.assignment3.plan.RecyclerViewAdapter;
+import com.example.assignment3.report.ReportActivity;
+import com.example.assignment3.viewmodel.PlanViewModel;
 import com.example.assignment3.weather.Root;
 import com.example.assignment3.weather.WeatherApiInterface;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,10 +54,16 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
     private TextView tempTextView;
     private ImageView weatherImage;
     private TextView mainTextView;
+    private Button workManagerBtn;
 
     private CardView allPlan;
-    private CardView indoorPlan;
-    private CardView outdoorPlan;
+    private CardView report;
+
+    private RecyclerViewAdapter adapter;
+    private PlanViewModel planViewModel;
+    private List<WorkoutPlan> plans;
+    private PlanService planService;
+
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -69,25 +92,14 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
                 startActivity(intent);
             } });
 
-
-        indoorPlan = findViewById(R.id.indoorButton);
-        indoorPlan.setOnClickListener(new View.OnClickListener() {
+        report = findViewById(R.id.reportButton);
+        report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,
-                        PlanActivity.class);
+                        ReportActivity.class);
                 startActivity(intent);
             } });
-
-        outdoorPlan = findViewById(R.id.outdoorButton);
-        outdoorPlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,
-                        PlanActivity.class);
-                startActivity(intent);
-            } });
-
 
 
         tempTextView = findViewById(R.id.tempTextView);
@@ -153,6 +165,47 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
             }
 
         });
+
+        //Work Manager
+        planService = new PlanService();
+        plans = new ArrayList<>();
+        planViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(PlanViewModel.class);
+        planViewModel.getAllWorkoutPlan().observe(this, new
+                Observer<List<WorkoutPlan>>() {
+                    @Override
+                    public void onChanged(@Nullable List<WorkoutPlan> workoutPlans) {
+                        plans.addAll(workoutPlans);
+                    }
+                });
+
+
+        //One time WorkRequest for trigger button
+        workManagerBtn = findViewById(R.id.workManager);
+        workManagerBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                for (WorkoutPlan p:plans) {
+                    String strPlan = new Gson().toJson(p);
+                    Data data = new Data.Builder()
+                            .putString("plan", strPlan)
+                            .build();
+                    OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(UpdateManager.class)
+                            .setInputData(data)
+                            .build();
+
+                    PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(UpdateManager.class, 24, TimeUnit.HOURS)
+                    .setInputData(data)
+                    .addTag("upload Room data to Firebase")
+                    .build();
+
+                    WorkManager.getInstance(v.getContext()).enqueue(oneTimeWorkRequest);
+                    WorkManager.getInstance(v.getContext()).enqueue(periodicWorkRequest);
+
+                }
+            }
+        });
+
 
 //        Map<String, Object> city = new HashMap<>();
 //        city.put("Address", "LA");

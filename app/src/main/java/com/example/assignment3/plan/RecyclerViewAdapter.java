@@ -35,6 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.binding.tvRvName.setText(plan.getPlanName());
         holder.binding.tvRvCategory.setText(plan.getCategory()+" exercise");
         holder.binding.tvRvTime.setText(plan.getTime()+(" mins"));
+
     }
 
     @Override

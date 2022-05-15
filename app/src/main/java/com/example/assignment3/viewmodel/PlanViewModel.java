@@ -33,6 +33,8 @@ public class PlanViewModel extends AndroidViewModel {
         cRepository.insert(workoutplan);
     }
 
+    public WorkoutPlan findById(int id){return cRepository.findById(id);}
+
     public void deleteAll() {
         cRepository.deleteAll();
     }
