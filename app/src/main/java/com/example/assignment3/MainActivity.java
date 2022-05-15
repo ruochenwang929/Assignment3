@@ -21,7 +21,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.OutOfQuotaPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
@@ -190,11 +189,11 @@ public class MainActivity extends DrawerActivity implements ActivityCompat.OnReq
                     Data data = new Data.Builder()
                             .putString("plan", strPlan)
                             .build();
-                    OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(UpdateManager.class)
+                    OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(UploadManager.class)
                             .setInputData(data)
                             .build();
 
-                    PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(UpdateManager.class, 24, TimeUnit.HOURS)
+                    PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(UploadManager.class, 24, TimeUnit.HOURS)
                     .setInputData(data)
                     .addTag("upload Room data to Firebase")
                     .build();

@@ -143,7 +143,7 @@
 
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/saveBtn"
         android:layout_width="209dp"
         android:layout_height="50dp"
         android:background="#000000"
@@ -157,7 +157,7 @@
         app:layout_constraintVertical_bias="0.555" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/clearBtn"
         android:layout_width="209dp"
         android:layout_height="40dp"
         android:background="#FFFFFF"

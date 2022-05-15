@@ -50,7 +50,7 @@ public class AddPlanActivity extends DrawerActivity {
         });
 
         //click save button
-        binding.button9.setOnClickListener(new View.OnClickListener() {
+        binding.saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 String name = binding.editTextTextPersonName.getText().toString();
@@ -70,7 +70,7 @@ public class AddPlanActivity extends DrawerActivity {
             }});
 
         //click clear button
-        binding.button10.setOnClickListener(new View.OnClickListener() {
+        binding.clearBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 binding.editTextTextPersonName.setText("");
                 binding.editTextTime2.setText("");
