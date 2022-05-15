@@ -61,6 +61,10 @@ public class PlanRepository {
         });
     }
 
+    public WorkoutPlan findById(final int id){
+        return planDao.findByID(id);
+    }
+
     //@RequiresApi(api = Build.VERSION_CODES.N)
     public CompletableFuture<WorkoutPlan> findByIDFuture(final int workoutplanId) {
         return CompletableFuture.supplyAsync(new Supplier<WorkoutPlan>() {
