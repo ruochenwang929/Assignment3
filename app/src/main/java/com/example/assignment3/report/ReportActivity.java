@@ -433,6 +433,8 @@ public class ReportActivity extends DrawerActivity {
 
             case R.id.shareButton:
 
+                Toast.makeText(ReportActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
+
                 final ShareDialog shareDialog = new ShareDialog(this);
                 ShareHashtag hashtag = new ShareHashtag
                         .Builder()
