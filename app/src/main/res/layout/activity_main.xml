@@ -71,13 +71,13 @@
 
     <LinearLayout
         android:id="@+id/weatherLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_marginTop="250dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="@id/hori60"
-        >
+        app:layout_constraintEnd_toEndOf="@id/top"
+        app:layout_constraintStart_toStartOf="@id/top"
+        app:layout_constraintTop_toTopOf="@id/hori35">
 
         <RelativeLayout
             android:layout_width="380dp"
@@ -95,16 +95,17 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/locationTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shang Hai     "
-                    android:fontFamily="@font/koho_bold"
-                    android:textColor="@color/white"
                     android:layout_weight="0.5"
+                    android:fontFamily="@font/koho_bold"
+                    android:text="Shang Hai     "
+                    android:textColor="@color/white"
                     android:textSize="30dp" />
 
                 <TextView
@@ -112,8 +113,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:textColor="@color/white"
                     android:fontFamily="@font/koho_bold"
+                    android:textColor="@color/white"
                     android:textSize="30dp" />
             </LinearLayout>
 
@@ -279,8 +280,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.34
-"
+        app:layout_constraintGuide_percent="0.34199727"
         app:layout_constraintStart_toStartOf="parent" />
 
 

@@ -10,5 +10,5 @@
     <string name="profile_name">Name: </string>
     <string name="profile_email">Email: </string>
     <string name="profile_address">Address: </string>
-
+    <string name="google_map_key">AIzaSyCJY_NZvZC94GEtAcnvcNawQC4X641dzJs</string>
 </resources>
