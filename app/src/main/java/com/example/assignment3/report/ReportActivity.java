@@ -26,6 +26,7 @@ import com.example.assignment3.DrawerActivity;
 import com.example.assignment3.R;
 import com.example.assignment3.databinding.ActivityReportBinding;
 import com.example.assignment3.entity.WorkoutPlan;
+import com.example.assignment3.plan.PlanDetailsActivity;
 import com.example.assignment3.viewmodel.PlanViewModel;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -174,6 +175,7 @@ public class ReportActivity extends DrawerActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            Toast.makeText(ReportActivity.this, "Loading data...Please update again. ", Toast.LENGTH_SHORT).show();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 records.add(document.getData());
                             }
@@ -211,8 +213,8 @@ public class ReportActivity extends DrawerActivity {
             end = now.getTimeInMillis();
         }
 
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(start));
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(end));
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(start));
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(end));
 
 
         //Reading testing data into bar entries
@@ -249,9 +251,9 @@ public class ReportActivity extends DrawerActivity {
             barEntries.add(new BarEntry(i,entryArray[i].getValue()));
         }
 
-        history.entrySet().forEach(h->{
-            System.out.println(h.getKey()+" "+h.getValue());
-        });
+//        history.entrySet().forEach(h->{
+//            System.out.println(h.getKey()+" "+h.getValue());
+//        });
 //
 //        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(start));
 //        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(end));
