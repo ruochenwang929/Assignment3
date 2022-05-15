@@ -1,6 +1,7 @@
 package com.example.assignment3;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,13 +15,13 @@ import com.example.assignment3.repository.PlanRepository;
 import com.example.assignment3.viewmodel.PlanViewModel;
 import com.google.gson.Gson;
 
-public class UpdateManager extends Worker {
+public class UploadManager extends Worker {
     private static final String TAG = "WorkerManager";
     private WorkoutPlan plan;
     private PlanService service;
     private PlanViewModel planViewModel;
 
-    public UpdateManager(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public UploadManager(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
     }
 
@@ -32,7 +33,7 @@ public class UpdateManager extends Worker {
         String strPlan = getInputData().getString("plan");
         WorkoutPlan plan = new Gson().fromJson(strPlan,WorkoutPlan.class);
 
-        System.out.println(plan.getPlanID());
+        Log.d("WorkManager","Update Manager is updating Room data to Firebase for Plan with ID: " + plan.getPlanID());
 
         service.addPlans(plan);
         try{
@@ -42,6 +43,8 @@ public class UpdateManager extends Worker {
             e.printStackTrace();
             return ListenableWorker.Result.failure();
         }
+
+        System.out.println("Plan with ID: "+plan.getPlanID()+" has been added to Firebase successfully");
 
 
         return ListenableWorker.Result.success();
