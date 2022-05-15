@@ -23,7 +23,7 @@
             android:exported="true" />
         <activity
             android:name=".userProfile.ProfileActivity"
-            android:exported="true" /> <!-- 这个key最后要换成崔姐的 -->
+            android:exported="true" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map_key" />
@@ -61,9 +61,6 @@
             android:exported="true" />
         <activity
             android:name=".plan.AddPlanActivity"
-            android:exported="true" />
-        <activity
-            android:name=".plan.DatePickerActivity"
             android:exported="true" />
 
         <meta-data

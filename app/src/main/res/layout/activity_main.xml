@@ -106,6 +106,7 @@
                     android:fontFamily="@font/koho_bold"
                     android:text="Shang Hai     "
                     android:textColor="@color/white"
+                    android:layout_marginLeft="16dp"
                     android:textSize="30dp" />
 
                 <TextView
@@ -125,7 +126,8 @@
                 android:layout_marginTop="60dp"
                 android:fontFamily="@font/koho_bold"
                 android:textColor="@color/white"
-                android:textSize="22dp" />
+                android:layout_marginLeft="16dp"
+                android:textSize="20dp" />
 
         </RelativeLayout>
 
