@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,11 +19,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.assignment3.BuildConfig;
 import com.example.assignment3.DrawerActivity;
 import com.example.assignment3.R;
 import com.example.assignment3.databinding.ActivityReportBinding;
+import com.example.assignment3.entity.WorkoutPlan;
+import com.example.assignment3.viewmodel.PlanViewModel;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -36,6 +40,8 @@ import com.facebook.share.widget.ShareDialog;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -48,18 +54,30 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.core.utilities.Tree;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class ReportActivity extends DrawerActivity {
 
@@ -72,7 +90,10 @@ public class ReportActivity extends DrawerActivity {
     private Long start;
     private Long end;
     final private int ONE_DAY = 1000*60*60*24;
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String currentUserEmail;
+    private List<Map<String, Object>> records;
+    private PlanViewModel planViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +102,8 @@ public class ReportActivity extends DrawerActivity {
         View view = binding.getRoot();
         super.addContentView(view);
         this.setTitle("Personal Report");
+
+        planViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(PlanViewModel.class);
 
         //Spinner setup
         final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, chartTypes);
@@ -98,7 +121,6 @@ public class ReportActivity extends DrawerActivity {
 
             }
         });
-
 
         //calculate default date (a week ago from now)
         now = Calendar.getInstance();
@@ -140,8 +162,31 @@ public class ReportActivity extends DrawerActivity {
             }
         });
 
-        //default bar chart
-        generateBarChart();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        currentUserEmail = user.getEmail();
+
+        records = new ArrayList<>();
+
+        db.collection("Workout Record")
+                .whereEqualTo("email", currentUserEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                records.add(document.getData());
+                                System.out.println(records.size());
+                            }
+
+                        } else {
+                            Log.d("Read Firebase Fail", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+//        //default bar chart
+//        generateBarChart();
 
         //update chart according to user input
         binding.updateBtn.setOnClickListener(new View.OnClickListener() {
@@ -161,22 +206,58 @@ public class ReportActivity extends DrawerActivity {
         binding.barChart.setVisibility(View.VISIBLE);
         binding.pieChart.setVisibility(View.INVISIBLE);
 
+
         if (start == null || end == null){
             start = aWeekAgo.getTimeInMillis();
             end = now.getTimeInMillis();
         }
 
-        //Toast.makeText(ReportActivity.this, start+" + "+end, Toast.LENGTH_SHORT).show();
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(start));
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(end));
+
 
         //Reading testing data into bar entries
         List<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0, 676));
-        barEntries.add(new BarEntry(1, 444));
-        barEntries.add(new BarEntry(2, 222));
-        barEntries.add(new BarEntry(3, 555));
-        barEntries.add(new BarEntry(4, 111));
-        barEntries.add(new BarEntry(5, 365));
-        barEntries.add(new BarEntry(6, 343));
+        Map<String,Integer> history = new TreeMap<>();
+
+
+        Long helper = start;
+
+        while(helper<=end){
+            history.put(new SimpleDateFormat("yyyy-MM-dd").format(helper),0);
+            helper+=ONE_DAY;
+        }
+
+
+        for (Map<String, Object> r:records){
+            long time = (long) r.get("RecordTime");
+
+            if (end.compareTo(time-ONE_DAY)>=0 && start.compareTo(time)<=0){
+                String strDate = new SimpleDateFormat("yyyy-MM-dd").format(time);
+                int current = history.get(strDate);
+                int add = Integer.parseInt((String) r.get("PlanTime"));
+                history.put(strDate, current+add);
+            }
+        }
+        Set<Map.Entry<String, Integer> > entrySet
+                = history.entrySet();
+        Map.Entry<String, Integer>[] entryArray
+                = entrySet.toArray(
+                new Map.Entry[entrySet.size()]);
+
+
+        for (int i=0;i<history.size();i++){
+            barEntries.add(new BarEntry(i,entryArray[i].getValue()));
+        }
+
+//        history.entrySet().forEach(h->{
+//            System.out.println(h.getKey()+" "+h.getValue());
+//        });
+//
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(start));
+//        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(end));
+
+
 
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Workout Time");
@@ -192,6 +273,7 @@ public class ReportActivity extends DrawerActivity {
             date+=ONE_DAY;
         }
 
+        binding.barChart.getXAxis().setAxisMinimum(0f);
         binding.barChart.getXAxis().setCenterAxisLabels(false);
         binding.barChart.getXAxis().setGranularity(1f);
         binding.barChart.getXAxis().setValueFormatter(new
@@ -235,12 +317,42 @@ public class ReportActivity extends DrawerActivity {
         binding.barChart.setVisibility(View.INVISIBLE);
         binding.pieChart.setVisibility(View.VISIBLE);
 
+
+        if (start == null || end == null){
+            start = aWeekAgo.getTimeInMillis();
+            end = now.getTimeInMillis();
+        }
+
+
+        //Toast.makeText(ReportActivity.this, start+" + "+end, Toast.LENGTH_SHORT).show();
+
+        //Reading data into pie entries
         List<PieEntry> pieEntries = new ArrayList<>();
-        pieEntries.add(new PieEntry(342,"plan1"));
-        pieEntries.add(new PieEntry(22,"plan2"));
-        pieEntries.add(new PieEntry(121,"plan3"));
-        pieEntries.add(new PieEntry(50,"plan4"));
-        pieEntries.add(new PieEntry(87,"plan5"));
+        Map<String,Integer> history = new TreeMap<>();
+
+
+        for (Map<String, Object> r:records){
+            long time = (long) r.get("RecordTime");
+            if (end.compareTo(time-ONE_DAY)>=0 && start.compareTo(time)<=0){
+                String name = (String) r.get("PlanName");
+                int current = 0;
+                if (history.get(name)!=null){
+                    current = history.get(name);
+                }
+                int add = Integer.parseInt((String) r.get("PlanTime"));
+                history.put(name, current+add);
+            }
+        }
+
+        history.entrySet().forEach(h->{
+            pieEntries.add(new PieEntry(h.getValue(),h.getKey()));
+        });
+
+//        pieEntries.add(new PieEntry(342,planViewModel.findById()));
+//        pieEntries.add(new PieEntry(22,"plan2"));
+//        pieEntries.add(new PieEntry(121,"plan3"));
+//        pieEntries.add(new PieEntry(50,"plan4"));
+//        pieEntries.add(new PieEntry(87,"plan5"));
 
         binding.pieChart.setDrawHoleEnabled(true);
 

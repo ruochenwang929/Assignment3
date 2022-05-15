@@ -59,6 +59,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(),PlanDetailsActivity.class);
                     WorkoutPlan plan = plans.get(getAdapterPosition());
+                    intent.putExtra("id",plan.getPlanID());
                     intent.putExtra("name",plan.getPlanName());
                     intent.putExtra("length",plan.getPlanLength());
                     intent.putExtra("time",plan.getTime());

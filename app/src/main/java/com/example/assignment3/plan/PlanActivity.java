@@ -44,8 +44,8 @@ public class PlanActivity extends DrawerActivity {
         this.setTitle("Workout Plan");
 
         plans = new ArrayList<>();
-        plans.add(new WorkoutPlan("plan1","30","30","Indoor","routines"));
-        plans.add(new WorkoutPlan("plan2","20","20","Outdoor","routines"));
+//        plans.add(new WorkoutPlan("plan1","30","30","Indoor","routines"));
+//        plans.add(new WorkoutPlan("plan2","20","20","Outdoor","routines"));
 
         adapter = new RecyclerViewAdapter(plans);
         adapter.addPlan(plans);
