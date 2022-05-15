@@ -95,6 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         cancelButton.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
             this.finish();
         });
 
