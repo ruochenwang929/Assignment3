@@ -53,22 +53,21 @@
         app:layout_constraintStart_toStartOf="@+id/top"
         app:layout_constraintTop_toBottomOf="@+id/titleIcon" />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+
+
+    <Button
+        android:id="@+id/workManager"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/bg_white_rounded"
-        android:iconifiedByDefault="false"
-        android:queryHint="Search for a workout"
-        android:submitBackground="@drawable/bg_white_rounded"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toTopOf="@id/hori35"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hori25" />
+        app:layout_constraintTop_toBottomOf="@+id/hori25"
+        android:text="Work Manager Trigger"/>
 
     <LinearLayout
         android:id="@+id/weatherLayout"
@@ -76,11 +75,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="250dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/hori60"
         >
 
         <RelativeLayout
             android:layout_width="380dp"
-            android:layout_height="match_parent"
+            android:layout_height="115dp"
             android:layout_gravity="center">
 
             <ImageView
@@ -88,6 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitStart"
+
                 android:src="@drawable/clear" />
 
             <LinearLayout
@@ -135,7 +137,7 @@
         android:fontFamily="@font/koho_bold"
         android:text="Recommended:"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/searchView"
+        app:layout_constraintStart_toStartOf="@+id/workManager"
         app:layout_constraintTop_toBottomOf="@+id/hori60" />
 
     <androidx.cardview.widget.CardView
