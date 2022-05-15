@@ -176,7 +176,6 @@ public class ReportActivity extends DrawerActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 records.add(document.getData());
-                                System.out.println(records.size());
                             }
 
                         } else {
@@ -232,7 +231,7 @@ public class ReportActivity extends DrawerActivity {
         for (Map<String, Object> r:records){
             long time = (long) r.get("RecordTime");
 
-            if (end.compareTo(time-ONE_DAY)>=0 && start.compareTo(time)<=0){
+            if (end.compareTo(time-ONE_DAY)>=0 && start.compareTo(time+ONE_DAY)<=0){
                 String strDate = new SimpleDateFormat("yyyy-MM-dd").format(time);
                 int current = history.get(strDate);
                 int add = Integer.parseInt((String) r.get("PlanTime"));
@@ -250,9 +249,9 @@ public class ReportActivity extends DrawerActivity {
             barEntries.add(new BarEntry(i,entryArray[i].getValue()));
         }
 
-//        history.entrySet().forEach(h->{
-//            System.out.println(h.getKey()+" "+h.getValue());
-//        });
+        history.entrySet().forEach(h->{
+            System.out.println(h.getKey()+" "+h.getValue());
+        });
 //
 //        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(start));
 //        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(end));
@@ -273,7 +272,7 @@ public class ReportActivity extends DrawerActivity {
             date+=ONE_DAY;
         }
 
-        binding.barChart.getXAxis().setAxisMinimum(0f);
+
         binding.barChart.getXAxis().setCenterAxisLabels(false);
         binding.barChart.getXAxis().setGranularity(1f);
         binding.barChart.getXAxis().setValueFormatter(new
@@ -319,7 +318,7 @@ public class ReportActivity extends DrawerActivity {
 
 
         if (start == null || end == null){
-            start = aWeekAgo.getTimeInMillis();
+            start = aWeekAgo.getTimeInMillis()-ONE_DAY;
             end = now.getTimeInMillis();
         }
 
