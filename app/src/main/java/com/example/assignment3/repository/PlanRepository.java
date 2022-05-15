@@ -1,6 +1,5 @@
 package com.example.assignment3.repository;
 
-
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
@@ -22,7 +21,7 @@ public class PlanRepository {
         planDao =db.planDao();
         allWorkoutPlan= planDao.getAll();
     }
-    // Room executes this query on a separate thread
+
     public LiveData<List<WorkoutPlan>> getAllWorkoutPlan() {
         return allWorkoutPlan;
     }

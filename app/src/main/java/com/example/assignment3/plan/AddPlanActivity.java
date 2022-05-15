@@ -41,7 +41,6 @@ public class AddPlanActivity extends DrawerActivity {
             public void onChanged(@Nullable final List<WorkoutPlan> workoutPlans) {
                 String allWorkoutPlan = "";
                 for (WorkoutPlan temp : workoutPlans) {
-                    //String workoutplanDetails = (temp.pid + " " + temp.planName + " " + temp.planLength + " " + temp.time + " " + temp.category + " " + temp.planRoutine);
                     String workoutplanDetails = ("PlanID:" + temp.pid + "  PlanName:" + temp.planName + "  time:" + temp.time + "mins  planRoutine:" + temp.planRoutine);
                     allWorkoutPlan = allWorkoutPlan + System.getProperty("line.separator") + workoutplanDetails;
                 }

@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.assignment3.DrawerActivity;
 import com.example.assignment3.R;
 import com.example.assignment3.databinding.ActivityPlanBinding;
+import com.example.assignment3.entity.TimeStampEntity;
 import com.example.assignment3.entity.WorkoutPlan;
 import com.example.assignment3.viewmodel.PlanViewModel;
+import com.example.assignment3.viewmodel.TimeStampViewModel;
 
 
 import java.util.ArrayList;
@@ -32,7 +34,6 @@ public class PlanActivity extends DrawerActivity {
     private List<WorkoutPlan> plans;
     private RecyclerViewAdapter adapter;
     private PlanViewModel planViewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
